@@ -101,7 +101,7 @@ export const initializeMockData = () => {
     productos: [
       {
         id: 'prod1',
-        nombre: 'Laptop Pro X1',
+        nombre: 'Arena1',
         descripcion: 'Laptop de alto rendimiento para profesionales',
         precio: 1299.99,
         costo: 899.99,
@@ -111,7 +111,7 @@ export const initializeMockData = () => {
       },
       {
         id: 'prod2',
-        nombre: 'Monitor UltraWide 32"',
+        nombre: 'Arena2',
         descripcion: 'Monitor curvo de alta resolución',
         precio: 499.99,
         costo: 320.50,
@@ -121,7 +121,7 @@ export const initializeMockData = () => {
       },
       {
         id: 'prod3',
-        nombre: 'Teclado Mecánico RGB',
+        nombre: 'Arena3',
         descripcion: 'Teclado gaming con switches Cherry MX',
         precio: 129.99,
         costo: 75.25,
@@ -131,7 +131,7 @@ export const initializeMockData = () => {
       },
       {
         id: 'prod4',
-        nombre: 'Silla Ergonómica Deluxe',
+        nombre: 'cemento1',
         descripcion: 'Silla de oficina con soporte lumbar y ajustes completos',
         precio: 349.99,
         costo: 210.75,
@@ -141,7 +141,7 @@ export const initializeMockData = () => {
       },
       {
         id: 'prod5',
-        nombre: 'Disco Duro SSD 1TB',
+        nombre: 'Cemento2',
         descripcion: 'Almacenamiento de estado sólido de alta velocidad',
         precio: 159.99,
         costo: 95.50,
@@ -151,7 +151,7 @@ export const initializeMockData = () => {
       },
       {
         id: 'prod6',
-        nombre: 'Tarjeta Gráfica Pro',
+        nombre: 'Cemento3',
         descripcion: 'GPU para diseño y gaming de alto rendimiento',
         precio: 799.99,
         costo: 550.00,
@@ -161,7 +161,7 @@ export const initializeMockData = () => {
       },
       {
         id: 'prod7',
-        nombre: 'Auriculares Bluetooth',
+        nombre: 'Inodoro1',
         descripcion: 'Auriculares inalámbricos con cancelación de ruido',
         precio: 179.99,
         costo: 95.00,
@@ -171,7 +171,7 @@ export const initializeMockData = () => {
       },
       {
         id: 'prod8',
-        nombre: 'Escritorio Ajustable',
+        nombre: 'Inodoro2',
         descripcion: 'Escritorio con altura ajustable eléctrica',
         precio: 449.99,
         costo: 270.00,
@@ -181,7 +181,7 @@ export const initializeMockData = () => {
       },
       {
         id: 'prod9',
-        nombre: 'Memoria RAM 32GB',
+        nombre: 'Inodoro3',
         descripcion: 'Kit de memoria de alta velocidad',
         precio: 249.99,
         costo: 160.00,
@@ -191,7 +191,7 @@ export const initializeMockData = () => {
       },
       {
         id: 'prod10',
-        nombre: 'Webcam 4K Pro',
+        nombre: 'Ceramica',
         descripcion: 'Cámara web de alta definición para videoconferencias',
         precio: 129.99,
         costo: 75.00,
@@ -211,25 +211,25 @@ export const initializeMockData = () => {
           {
             id: 'item1',
             productoId: 'prod1',
-            cantidad: 3,
+            cantidad: 1,
             precioUnitario: 1299.99,
             descuento: 100,
-            subtotal: 3799.97
+            subtotal: 1299.99 - 100
           },
           {
             id: 'item2',
             productoId: 'prod2',
-            cantidad: 3,
+            cantidad: 1,
             precioUnitario: 499.99,
             descuento: 50,
-            subtotal: 1449.97
+            subtotal: 499.99 - 50
           }
         ],
         subtotal: 5249.94,
         impuestos: 997.49,
         descuentoTotal: 150,
         total: 6097.43,
-        estado: 'aceptado',
+        estado: 'enviado',
         notas: 'Entrega urgente requerida'
       },
       {
@@ -240,16 +240,16 @@ export const initializeMockData = () => {
         items: [
           {
             id: 'item3',
-            productoId: 'prod3',
-            cantidad: 10,
+            productoId: 'prod1',
+            cantidad: 1,
             precioUnitario: 129.99,
             descuento: 0,
             subtotal: 1299.90
           },
           {
             id: 'item4',
-            productoId: 'prod5',
-            cantidad: 5,
+            productoId: 'prod2',
+            cantidad: 1,
             precioUnitario: 159.99,
             descuento: 0,
             subtotal: 799.95

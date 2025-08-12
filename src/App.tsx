@@ -14,6 +14,9 @@ import Presupuestos from './pages/Presupuestos';
 import Catalogo from './pages/Catalogo';
 import Comparador from './pages/Comparador';
 import NotFound from './pages/NotFound';
+import CatalogoCliente from './pages/clientes/CatalogoCliente';
+import PresupuestosCliente from './pages/clientes/PresupuestosCliente';
+import ComparadorCliente from './pages/clientes/ComparadorCliente';
 
 const queryClient = new QueryClient();
 
@@ -32,6 +35,12 @@ const App = () => (
               <Route path="/presupuestos" element={<Presupuestos />} />
               <Route path="/catalogo" element={<Catalogo />} />
               <Route path="/comparador" element={<Comparador />} />
+              
+              {/* rutas vista cliente */}
+              <Route path="/cliente/home" element={<CatalogoCliente/>} />
+              <Route path="/cliente/presupuestos" element={<PresupuestosCliente/>} />
+              <Route path="/cliente/comparador" element={<ComparadorCliente/>} />
+            
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

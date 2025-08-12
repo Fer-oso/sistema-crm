@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conectar Construcciones</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    }
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .fade-in {
+      animation: fadeIn 0.6s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <!-- Header con navegación -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-bold text-gray-800">Conectar Construcciones</h1>
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-600">📞 +54 11 1234-5678</span>
+          <button id="cartBtn" class="relative bg-blue-900 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors">
+            🛒 Carrito <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner Presupuesto -->
+  <section class="relative gradient-bg text-white py-12 px-6 flex justify-center">
+    <div class="relative bg-black bg-opacity-20 backdrop-blur-sm p-8 rounded-2xl max-w-2xl border border-white border-opacity-20">
+      <h2 class="text-3xl font-bold mb-6 text-center">¿Cómo obtener tu presupuesto?</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center fade-in">
+          <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+            <span class="text-2xl">📋</span>
+          </div>
+          <h3 class="font-semibold mb-2">1. Elige</h3>
+          <p class="text-sm opacity-90">Selecciona las categorías y productos que necesitas</p>
+        </div>
+        <div class="text-center fade-in" style="animation-delay: 0.2s;">
+          <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+            <span class="text-2xl">📝</span>
+          </div>
+          <h3 class="font-semibold mb-2">2. Completa</h3>
+          <p class="text-sm opacity-90">Llena tu solicitud con tus datos de contacto</p>
+        </div>
+        <div class="text-center fade-in" style="animation-delay: 0.4s;">
+          <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+            <span class="text-2xl">🤝</span>
+          </div>
+          <h3 class="font-semibold mb-2">3. Conecta</h3>
+          <p class="text-sm opacity-90">Te contactamos para ajustar detalles</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Botón Presupuesto -->
+  <div class="flex justify-center py-8 -mt-6 relative z-10">
+    <button id="presupuestoBtn" class="pulse-animation bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-2xl transition-all">
+      🚀 Solicitar Presupuesto Ahora
+    </button>
+  </div>
+
+  <!-- Filtros y Buscador -->
+  <section class="max-w-6xl mx-auto px-6 mb-8">
+    <div class="bg-white p-6 rounded-xl shadow-sm">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <h3 class="text-2xl font-bold text-gray-800">Encuentra los materiales que necesitas</h3>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <!-- Filtros -->
+          <select id="categoryFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="">Todas las categorías</option>
+            <option value="madera">Madera</option>
+            <option value="cemento">Cemento</option>
+            <option value="herramientas">Herramientas</option>
+            <option value="electricidad">Electricidad</option>
+          </select>
+          <!-- Buscador -->
+          <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">
+            <div class="bg-gray-100 px-3 py-2">🔍</div>
+            <input id="searchInput" type="text" placeholder="Buscar productos..." class="flex-1 px-3 py-2 outline-none min-w-0">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galería de Productos -->
+  <section class="max-w-6xl mx-auto px-6 mb-12">
+    <div id="productsGrid" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <!-- Los productos se generarán dinámicamente -->
+    </div>
+    
+    <!-- Mensaje cuando no hay resultados -->
+    <div id="noResults" class="hidden text-center py-12">
+      <div class="text-6xl mb-4">🔍</div>
+      <h3 class="text-xl font-semibold text-gray-600 mb-2">No se encontraron productos</h3>
+      <p class="text-gray-500">Intenta con otros términos de búsqueda</p>
+    </div>
+  </section>
+
+  <!-- Modal del Carrito -->
+  <div id="cartModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full max-h-96 overflow-hidden">
+      <div class="p-6 border-b">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-bold">Tu Carrito</h3>
+          <button id="closeCart" class="text-gray-500 hover:text-gray-700">✕</button>
+        </div>
+      </div>
+      <div id="cartItems" class="p-6 overflow-y-auto max-h-60">
+        <p class="text-gray-500 text-center">Tu carrito está vacío</p>
+      </div>
+      <div class="p-6 border-t bg-gray-50">
+        <button id="requestQuote" class="w-full bg-blue-900 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors">
+          Solicitar Presupuesto
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Presupuesto -->
+  <div id="quoteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-lg w-full">
+      <div class="p-6 border-b">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-bold">Solicitar Presupuesto</h3>
+          <button id="closeQuote" class="text-gray-500 hover:text-gray-700">✕</button>
+        </div>
+      </div>
+      <form id="quoteForm" class="p-6">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
+            <input type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input type="email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+            <input type="tel" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Comentarios adicionales</label>
+            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="mt-6">
+          <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+            Enviar Solicitud
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Imagen final tipo showroom -->
+  <section class="max-w-6xl mx-auto px-6 pb-12">
+    <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+      <img src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Showroom de materiales de construcción" class="w-full h-96 object-cover">
+      <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+        <div class="text-center text-white">
+          <h3 class="text-3xl font-bold mb-4">¿Necesitas asesoramiento?</h3>
+          <p class="text-lg mb-6">Nuestros expertos te ayudan a elegir los mejores materiales</p>
+          <button class="bg-white text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            Contactar Experto
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <h4 class="text-lg font-bold mb-4">Conectar Construcciones</h4>
+          <p class="text-gray-300">Tu partner confiable para materiales de construcción de calidad.</p>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold mb-4">Contacto</h4>
+          <div class="space-y-2 text-gray-300">
+            <p>📞 +54 11 1234-5678</p>
+            <p>📧 info@conectarconstrucciones.com</p>
+            <p>📍 Buenos Aires, Argentina</p>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-lg font-bold mb-4">Horarios</h4>
+          <div class="space-y-2 text-gray-300">
+            <p>Lunes a Viernes: 8:00 - 18:00</p>
+            <p>Sábados: 8:00 - 14:00</p>
+            <p>Domingos: Cerrado</p>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 Conectar Construcciones. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Datos de productos
+    const products = [
+      {
+        id: 1,
+        name: "Madera de Pino",
+        category: "madera",
+        image: "https://images.unsplash.com/photo-1419745592850-1ed3d716f999?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+        description: "Tablas de pino de alta calidad"
+      },
+      {
+        id: 2,
+        name: "Cemento Portland",
+        category: "cemento",
+        image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+        description: "Cemento resistente para construcción"
+      },
+      {
+        id: 3,
+        name: "Taladro Eléctrico",
+        category: "herramientas",
+        image: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+        description: "Herramienta profesional de alta potencia"
+      },
+      {
+        id: 4,
+        name: "Cable Eléctrico",
+        category: "electricidad",
+        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+        description: "Cable de cobre para instalaciones"
+      },
+      {
+        id: 5,
+        name: "Ladrillos Comunes",
+        category: "cemento",
+        image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+        description: "Ladrillos de arcilla cocida"
+      },
+      {
+        id: 6,
+        name: "Martillo de Carpintero",
+        category: "herramientas",
+        image: "https://images.unsplash.com/photo-1609205807107-e8ec2120f9de?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+        description: "Martillo profesional mango de madera"
+      },
+      {
+        id: 7,
+        name: "Madera de Roble",
+        category: "madera",
+        image: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+        description: "Madera noble para acabados finos"
+      },
+      {
+        id: 8,
+        name: "Interruptores",
+        category: "electricidad",
+        image: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+        description: "Interruptores de pared modernos"
+      }
+    ];
+
+    // Estado del carrito
+    let cart = {};
+    let filteredProducts = [...products];
+
+    // Elementos del DOM
+    const productsGrid = document.getElementById('productsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const cartCount = document.getElementById('cartCount');
+    const cartBtn = document.getElementById('cartBtn');
+    const cartModal = document.getElementById('cartModal');
+    const quoteModal = document.getElementById('quoteModal');
+    const noResults = document.getElementById('noResults');
+
+    // Renderizar productos
+    function renderProducts(productList) {
+      if (productList.length === 0) {
+        productsGrid.classList.add('hidden');
+        noResults.classList.remove('hidden');
+        return;
+      }
+
+      productsGrid.classList.remove('hidden');
+      noResults.classList.add('hidden');
+
+      productsGrid.innerHTML = productList.map(product => `
+        <div class="bg-white rounded-xl shadow-sm card-hover overflow-hidden">
+          <img src="${product.image}" class="w-full h-48 object-cover" alt="${product.name}">
+          <div class="p-4">
+            <h4 class="font-bold text-gray-800 mb-2">${product.name}</h4>
+            <p class="text-sm text-gray-600 mb-4">${product.description}</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">${getCategoryName(product.category)}</span>
+              <div class="flex items-center">
+                <button onclick="updateQuantity(${product.id}, -1)" class="bg-gray-200 hover:bg-gray-300 w-8 h-8 rounded-l-lg flex items-center justify-center transition-colors">-</button>
+                <span class="bg-gray-100 px-3 py-2 text-sm font-medium">${cart[product.id] || 0}</span>
+                <button onclick="updateQuantity(${product.id}, 1)" class="bg-blue-900 hover:bg-blue-800 text-white w-8 h-8 rounded-r-lg flex items-center justify-center transition-colors">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Obtener nombre de categoría
+    function getCategoryName(category) {
+      const names = {
+        madera: 'Madera',
+        cemento: 'Cemento',
+        herramientas: 'Herramientas',
+        electricidad: 'Electricidad'
+      };
+      return names[category] || category;
+    }
+
+    // Actualizar cantidad en carrito
+    function updateQuantity(productId, change) {
+      cart[productId] = Math.max(0, (cart[productId] || 0) + change);
+      if (cart[productId] === 0) {
+        delete cart[productId];
+      }
+      updateCartCount();
+      renderProducts(filteredProducts);
+    }
+
+    // Actualizar contador del carrito
+    function updateCartCount() {
+      const total = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+      cartCount.textContent = total;
+      cartCount.classList.toggle('hidden', total === 0);
+    }
+
+    // Filtrar productos
+    function filterProducts() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const category = categoryFilter.value;
+      
+      filteredProducts = products.filter(product => {
+        const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                            product.description.toLowerCase().includes(searchTerm);
+        const matchesCategory = !category || product.category === category;
+        return matchesSearch && matchesCategory;
+      });
+      
+      renderProducts(filteredProducts);
+    }
+
+    // Renderizar carrito
+    function renderCart() {
+      const cartItems = document.getElementById('cartItems');
+      const items = Object.entries(cart);
+      
+      if (items.length === 0) {
+        cartItems.innerHTML = '<p class="text-gray-500 text-center">Tu carrito está vacío</p>';
+        return;
+      }
+      
+      cartItems.innerHTML = items.map(([productId, quantity]) => {
+        const product = products.find(p => p.id == productId);
+        return `
+          <div class="flex items-center justify-between py-2">
+            <div class="flex items-center">
+              <img src="${product.image}" class="w-12 h-12 object-cover rounded-lg mr-3" alt="${product.name}">
+              <div>
+                <h5 class="font-medium text-sm">${product.name}</h5>
+                <p class="text-xs text-gray-500">${getCategoryName(product.category)}</p>
+              </div>
+            </div>
+            <div class="flex items-center">
+              <span class="text-sm font-medium mr-2">x${quantity}</span>
+              <button onclick="updateQuantity(${productId}, -quantity)" class="text-red-500 hover:text-red-700">🗑️</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Event listeners
+    searchInput.addEventListener('input', filterProducts);
+    categoryFilter.addEventListener('change', filterProducts);
+
+    cartBtn.addEventListener('click', () => {
+      renderCart();
+      cartModal.classList.remove('hidden');
+    });
+
+    document.getElementById('closeCart').addEventListener('click', () => {
+      cartModal.classList.add('hidden');
+    });
+
+    document.getElementById('requestQuote').addEventListener('click', () => {
+      cartModal.classList.add('hidden');
+      quoteModal.classList.remove('hidden');
+    });
+
+    document.getElementById('presupuestoBtn').addEventListener('click', () => {
+      quoteModal.classList.remove('hidden');
+    });
+
+    document.getElementById('closeQuote').addEventListener('click', () => {
+      quoteModal.classList.add('hidden');
+    });
+
+    document.getElementById('quoteForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('¡Gracias! Tu solicitud ha sido enviada. Nos contactaremos contigo pronto.');
+      quoteModal.classList.add('hidden');
+      // Aquí podrías enviar los datos a un servidor
+    });
+
+    // Cerrar modales al hacer click fuera
+    [cartModal, quoteModal].forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.add('hidden');
+        }
+      });
+    });
+
+    // Inicializar
+    renderProducts(filteredProducts);
+  </script>
+</body>
+</html>
