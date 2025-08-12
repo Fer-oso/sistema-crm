@@ -244,43 +244,134 @@ export default function CatalogoCliente() {
   return (
     <div className="space-y-6">
 <>
+<>
   {/* Banner Presupuesto */}
-  <section className="relative gradient-bg text-white py-12 px-6 flex justify-center items-center lg:py-16 lg:h-[560px] no-repeat image-bg">
-    <div className="relative bg-black bg-opacity-80 backdrop-blur-sm p-8 rounded-2xl max-w-2xl border border-white border-opacity-20 h-[400px]">
-      <h2 className="text-3xl font-bold mb-6 text-center">
-        ¿Cómo obtener tu presupuesto?
+  <section className=" text-white py-12 px-6 flex justify-center items-center lg:py-16 lg:h-[560px] image-bg banner-content ">
+    <div className="relative max-w-6xl w-full">
+      <h2 className="text-6xl font-bold mb-10 text-center text-black">
+        ¿Cómo trabajamos contigo?
       </h2>
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="text-center fade-in">
-          <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
-            <span className="text-2xl">📋</span>
+      {/* Contenedor dividido en dos mitades */}
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Primera mitad - Productos específicos */}
+        <div className=" bg-black bg-opacity-70 backdrop-blur-sm p-8 rounded-2xl border border-white border-opacity-20 h-[400px] flex flex-col justify-between">
+          <div>
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-orange-500 bg-opacity-80 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl">🛒</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Productos Específicos</h3>
+              <p className="text-lg opacity-90 mb-6">
+                Encuentra y selecciona materiales exactos de nuestra galería
+              </p>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3 fade-in">
+                <div className="w-8 h-8 bg-orange-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span className="text-sm font-bold">1</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Explora la galería</h4>
+                  <p className="text-sm opacity-80">
+                    Navega por nuestros productos organizados por categorías
+                  </p>
+                </div>
+              </div>
+              <div
+                className="flex items-start space-x-3 fade-in"
+                style={{ animationDelay: "0.2s" }}
+              >
+                <div className="w-8 h-8 bg-orange-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span className="text-sm font-bold">2</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Añade al carrito</h4>
+                  <p className="text-sm opacity-80">
+                    Selecciona cantidades específicas de cada producto
+                  </p>
+                </div>
+              </div>
+              <div
+                className="flex items-start space-x-3 fade-in"
+                style={{ animationDelay: "0.4s" }}
+              >
+                <div className="w-8 h-8 bg-orange-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span className="text-sm font-bold">3</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Solicita tu pedido</h4>
+                  <p className="text-sm opacity-80">
+                    Te contactamos para confirmar detalles y precios
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3 className="font-semibold mb-2 ">1. Elige</h3>
-          <p className="text-sm opacity-90">
-            Selecciona las categorías y productos que necesitas
-          </p>
+
         </div>
-        <div className="text-center fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
-            <span className="text-2xl">📝</span>
+        {/* Segunda mitad - Presupuesto general */}
+        <div className="bg-black bg-opacity-70 backdrop-blur-sm p-8 rounded-2xl border border-white border-opacity-20 h-[400px] flex flex-col justify-between">
+          <div>
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-blue-500 bg-opacity-80 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl">📋</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Presupuesto General</h3>
+              <p className="text-lg opacity-90 mb-6">
+                Describe tu proyecto y te armamos un presupuesto completo
+              </p>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3 fade-in">
+                <div className="w-8 h-8 bg-blue-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span className="text-sm font-bold">1</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Describe tu proyecto</h4>
+                  <p className="text-sm opacity-80">
+                    Cuéntanos qué tipo de obra vas a realizar
+                  </p>
+                </div>
+              </div>
+              <div
+                className="flex items-start space-x-3 fade-in"
+                style={{ animationDelay: "0.2s" }}
+              >
+                <div className="w-8 h-8 bg-blue-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span className="text-sm font-bold">2</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Completa el formulario</h4>
+                  <p className="text-sm opacity-80">
+                    Proporciona detalles y medidas de tu proyecto
+                  </p>
+                </div>
+              </div>
+              <div
+                className="flex items-start space-x-3 fade-in"
+                style={{ animationDelay: "0.4s" }}
+              >
+                <div className="w-8 h-8 bg-blue-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span className="text-sm font-bold">3</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Recibe tu presupuesto</h4>
+                  <p className="text-sm opacity-80">
+                    Te enviamos un presupuesto detallado en 24-48hs
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3 className="font-semibold mb-2">2. Completa</h3>
-          <p className="text-sm opacity-90">
-            Llena tu solicitud con tus datos de contacto
-          </p>
-        </div>
-        <div className="text-center fade-in" style={{ animationDelay: "0.4s" }}>
-          <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
-            <span className="text-2xl">🤝</span>
-          </div>
-          <h3 className="font-semibold mb-2">3. Conecta</h3>
-          <p className="text-sm opacity-90">
-            Te contactamos para ajustar detalles
-          </p>
+          <button id="quickQuoteBtn" className="mt-5 pulse-animation bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold shadow-lg transition-all">
+        📋 Presupuesto General
+      </button>
         </div>
       </div>
     </div>
   </section>
+</>
+
 </>
 
       <div className="flex justify-between items-center">

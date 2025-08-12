@@ -50,30 +50,109 @@
   </header>
 
   <!-- Banner Presupuesto -->
-  <section class="relative gradient-bg text-white py-12 px-6 flex justify-center">
-    <div class="relative bg-black bg-opacity-20 backdrop-blur-sm p-8 rounded-2xl max-w-2xl border border-white border-opacity-20">
-      <h2 class="text-3xl font-bold mb-6 text-center">¿Cómo obtener tu presupuesto?</h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="text-center fade-in">
-          <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
-            <span class="text-2xl">📋</span>
+  <section class="relative gradient-bg text-white py-12 px-6 flex justify-center items-center lg:py-16 lg:h-[560px]">
+    <div class="relative max-w-6xl w-full">
+      <h2 class="text-4xl font-bold mb-10 text-center">¿Cómo trabajamos contigo?</h2>
+      
+      <!-- Contenedor dividido en dos mitades -->
+      <div class="grid lg:grid-cols-2 gap-8">
+        
+        <!-- Primera mitad - Productos específicos -->
+        <div class="bg-black bg-opacity-40 backdrop-blur-sm p-8 rounded-2xl border border-white border-opacity-20 h-[400px] flex flex-col justify-between">
+          <div>
+            <div class="text-center mb-6">
+              <div class="w-16 h-16 bg-orange-500 bg-opacity-80 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-3xl">🛒</span>
+              </div>
+              <h3 class="text-2xl font-bold mb-3">Productos Específicos</h3>
+              <p class="text-lg opacity-90 mb-6">Encuentra y selecciona materiales exactos de nuestra galería</p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3 fade-in">
+                <div class="w-8 h-8 bg-orange-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span class="text-sm font-bold">1</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Explora la galería</h4>
+                  <p class="text-sm opacity-80">Navega por nuestros productos organizados por categorías</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start space-x-3 fade-in" style="animation-delay: 0.2s;">
+                <div class="w-8 h-8 bg-orange-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span class="text-sm font-bold">2</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Añade al carrito</h4>
+                  <p class="text-sm opacity-80">Selecciona cantidades específicas de cada producto</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start space-x-3 fade-in" style="animation-delay: 0.4s;">
+                <div class="w-8 h-8 bg-orange-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span class="text-sm font-bold">3</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Solicita tu pedido</h4>
+                  <p class="text-sm opacity-80">Te contactamos para confirmar detalles y precios</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3 class="font-semibold mb-2">1. Elige</h3>
-          <p class="text-sm opacity-90">Selecciona las categorías y productos que necesitas</p>
+          
+          <button id="exploreProductsBtn" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-bold transition-colors mt-6">
+            Ver Productos 🛒
+          </button>
         </div>
-        <div class="text-center fade-in" style="animation-delay: 0.2s;">
-          <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
-            <span class="text-2xl">📝</span>
+
+        <!-- Segunda mitad - Presupuesto general -->
+        <div class="bg-black bg-opacity-40 backdrop-blur-sm p-8 rounded-2xl border border-white border-opacity-20 h-[400px] flex flex-col justify-between">
+          <div>
+            <div class="text-center mb-6">
+              <div class="w-16 h-16 bg-blue-500 bg-opacity-80 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-3xl">📋</span>
+              </div>
+              <h3 class="text-2xl font-bold mb-3">Presupuesto General</h3>
+              <p class="text-lg opacity-90 mb-6">Describe tu proyecto y te armamos un presupuesto completo</p>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3 fade-in">
+                <div class="w-8 h-8 bg-blue-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span class="text-sm font-bold">1</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Describe tu proyecto</h4>
+                  <p class="text-sm opacity-80">Cuéntanos qué tipo de obra vas a realizar</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start space-x-3 fade-in" style="animation-delay: 0.2s;">
+                <div class="w-8 h-8 bg-blue-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span class="text-sm font-bold">2</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Completa el formulario</h4>
+                  <p class="text-sm opacity-80">Proporciona detalles y medidas de tu proyecto</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start space-x-3 fade-in" style="animation-delay: 0.4s;">
+                <div class="w-8 h-8 bg-blue-500 bg-opacity-60 rounded-full flex items-center justify-center mt-1">
+                  <span class="text-sm font-bold">3</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Recibe tu presupuesto</h4>
+                  <p class="text-sm opacity-80">Te enviamos un presupuesto detallado en 24-48hs</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3 class="font-semibold mb-2">2. Completa</h3>
-          <p class="text-sm opacity-90">Llena tu solicitud con tus datos de contacto</p>
-        </div>
-        <div class="text-center fade-in" style="animation-delay: 0.4s;">
-          <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
-            <span class="text-2xl">🤝</span>
-          </div>
-          <h3 class="font-semibold mb-2">3. Conecta</h3>
-          <p class="text-sm opacity-90">Te contactamos para ajustar detalles</p>
+          
+          <button id="generalQuoteBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition-colors mt-6">
+            Solicitar Presupuesto 📋
+          </button>
         </div>
       </div>
     </div>
@@ -81,9 +160,14 @@
 
   <!-- Botón Presupuesto -->
   <div class="flex justify-center py-8 -mt-6 relative z-10">
-    <button id="presupuestoBtn" class="pulse-animation bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-2xl transition-all">
-      🚀 Solicitar Presupuesto Ahora
-    </button>
+    <div class="flex flex-col sm:flex-row gap-4">
+      <button id="quickExploreBtn" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-bold shadow-lg transition-all">
+        🛒 Ver Productos
+      </button>
+      <button id="quickQuoteBtn" class="pulse-animation bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold shadow-lg transition-all">
+        📋 Presupuesto General
+      </button>
+    </div>
   </div>
 
   <!-- Filtros y Buscador -->
@@ -410,6 +494,31 @@
     searchInput.addEventListener('input', filterProducts);
     categoryFilter.addEventListener('change', filterProducts);
 
+    // Nuevos botones del banner
+    document.getElementById('exploreProductsBtn').addEventListener('click', () => {
+      // Scroll suave hacia la sección de productos
+      document.getElementById('productsGrid').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
+
+    document.getElementById('generalQuoteBtn').addEventListener('click', () => {
+      quoteModal.classList.remove('hidden');
+    });
+
+    // Botones adicionales de acceso rápido
+    document.getElementById('quickExploreBtn').addEventListener('click', () => {
+      document.getElementById('productsGrid').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
+
+    document.getElementById('quickQuoteBtn').addEventListener('click', () => {
+      quoteModal.classList.remove('hidden');
+    });
+
     cartBtn.addEventListener('click', () => {
       renderCart();
       cartModal.classList.remove('hidden');
@@ -421,10 +530,6 @@
 
     document.getElementById('requestQuote').addEventListener('click', () => {
       cartModal.classList.add('hidden');
-      quoteModal.classList.remove('hidden');
-    });
-
-    document.getElementById('presupuestoBtn').addEventListener('click', () => {
       quoteModal.classList.remove('hidden');
     });
 
