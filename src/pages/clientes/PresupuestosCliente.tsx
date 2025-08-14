@@ -59,9 +59,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { v4 as uuidv4 } from "uuid";
 
-export default function PresupuestosCliente() {
+export default function PresupuestosClientes() {
   const [presupuestos, setPresupuestos] = useState<Presupuesto[]>([]);
   const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [filtroEstado, setFiltroEstado] = useState("Todos");
   const [productos, setProductos] = useState<Producto[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [presupuestoSeleccionado, setPresupuestoSeleccionado] = useState<Presupuesto | null>(null);
@@ -113,13 +114,20 @@ export default function PresupuestosCliente() {
   };
 
   const presupuestosFiltrados = presupuestos.filter(presupuesto => {
+    // Filtrar por término de búsqueda
     const cliente = clientes.find(c => c.id === presupuesto.clienteId);
-    return (
+    const searchMatch = 
       cliente?.nombre.toLowerCase().includes(searchTerm) ||
       presupuesto.id.toLowerCase().includes(searchTerm) ||
-      presupuesto.estado.toLowerCase().includes(searchTerm)
-    );
+      presupuesto.estado.toLowerCase().includes(searchTerm);
+
+    // Filtrar por estado
+    const estadoMatch = filtroEstado === "Todos" || presupuesto.estado === filtroEstado.toLowerCase();
+
+    return searchMatch && estadoMatch;
   });
+
+  const handleFiltroEstadoChange = (estado: string) => setFiltroEstado(estado);
 
   const handleClienteChange = (clienteId: string) => {
     if (presupuestoSeleccionado) {
@@ -428,7 +436,7 @@ export default function PresupuestosCliente() {
       case 'enviado':
         return <Badge variant="secondary">Enviado</Badge>;
       case 'aceptado':
-        return <Badge variant="success" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">Aceptado</Badge>;
+        return <Badge variant="success"className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">Aceptado</Badge>;
       case 'rechazado':
         return <Badge variant="destructive">Rechazado</Badge>;
       default:
@@ -437,82 +445,227 @@ export default function PresupuestosCliente() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-        <h2 className="text-3xl font-bold tracking-tight">Cliente</h2>
-          <h2 className="text-3xl font-bold tracking-tight">Presupuestos</h2>
-          <p className="text-muted-foreground">
-            Crea y gestiona presupuestos para tus clientes
-          </p>
+
+<div className="space-y-8">
+  {/* Encabezado */}
+  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div>
+      <h2 className="text-3xl font-bold tracking-tight">Presupuestos</h2>
+      <p className="text-muted-foreground">
+        Crea y gestiona presupuestos para tus clientes
+      </p>
+    </div>
+    <Button onClick={abrirDialogoNuevoPresupuesto} className="self-start md:self-auto">
+      <PlusCircle className="mr-2 h-4 w-4" /> Nuevo Presupuesto
+    </Button>
+  </div>
+
+  {/* Barra de búsqueda y filtro */}
+  <div className="flex flex-col sm:flex-row gap-4 md:w-[600px]">
+    <Input
+      placeholder="Buscar por cliente, ID o estado..."
+      value={searchTerm}
+      onChange={handleSearch}
+      className="flex-grow"
+    />
+    <Select value={filtroEstado} onValueChange={handleFiltroEstadoChange}>
+      <SelectTrigger className="w-full sm:w-[180px] md:w-[250px]">
+        <SelectValue placeholder="Filtrar por estado" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="Todos">Todos los estados</SelectItem>
+        <SelectItem value="Borrador">Borrador</SelectItem>
+        <SelectItem value="Enviado">Enviado</SelectItem>
+        <SelectItem value="Aceptado">Aceptado</SelectItem>
+        <SelectItem value="Rechazado">Rechazado</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+
+  {/* Tabla */}
+  <div className="rounded-lg border shadow-sm overflow-hidden">
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-32">ID</TableHead>
+          <TableHead>Cliente</TableHead>
+          <TableHead>Fecha</TableHead>
+          <TableHead>Válido hasta</TableHead>
+          <TableHead>Total</TableHead>
+          <TableHead>Estado</TableHead>
+          <TableHead className="text-right w-28">Acciones</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {presupuestosFiltrados.length === 0 ? (
+          <TableRow>
+            <TableCell colSpan={7} className="h-24 text-center">
+              <div className="flex flex-col items-center justify-center text-muted-foreground">
+                <AlertCircle className="h-8 w-8 mb-2" />
+                <p>No hay presupuestos para mostrar</p>
+                <p className="text-sm">
+                  Crea nuevos presupuestos usando el botón "Nuevo Presupuesto"
+                </p>
+              </div>
+            </TableCell>
+          </TableRow>
+        ) : (
+          presupuestosFiltrados.map((presupuesto) => (
+            <TableRow
+              key={presupuesto.id}
+              className="cursor-pointer hover:bg-muted/50"
+              onClick={() => abrirVistaPresupuesto(presupuesto)}
+            >
+              <TableCell className="font-medium">{presupuesto.id.substring(0, 8)}...</TableCell>
+              <TableCell>{getNombreCliente(presupuesto.clienteId)}</TableCell>
+              <TableCell>{formatDate(presupuesto.fecha)}</TableCell>
+              <TableCell>{formatDate(presupuesto.fechaValidez)}</TableCell>
+              <TableCell>{formatCurrency(presupuesto.total)}</TableCell>
+              <TableCell>{getBadgeForEstado(presupuesto.estado)}</TableCell>
+              <TableCell className="text-right">
+                <div
+                  className="flex justify-end gap-2"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      abrirDialogoEditarPresupuesto(presupuesto);
+                    }}
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="text-destructive"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      confirmarBorrarPresupuesto(presupuesto.id);
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))
+        )}
+      </TableBody>
+    </Table>
+ 
+     {/* Diálogo para crear/editar presupuesto */}
+     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+  <DialogContent className="max-w-6xl max-h-[105vh] flex flex-col">
+    <DialogHeader>
+      <DialogTitle>
+        {presupuestoSeleccionado ? "Editar Presupuesto" : "Nuevo Presupuesto"}
+      </DialogTitle>
+      <DialogDescription>
+        {presupuestoSeleccionado
+          ? "Modifica los detalles del presupuesto y sus ítems."
+          : "Crea un nuevo presupuesto seleccionando un cliente y agregando ítems."}
+      </DialogDescription>
+    </DialogHeader>
+
+    {/* Contenido con scroll */}
+    <div className="overflow-y-auto pr-2 flex-1">
+         {/* Datos principales */}
+         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-2 ">
+          <Label htmlFor="cliente">Cliente</Label>
+          <Select
+            value={presupuestoSeleccionado ? presupuestoSeleccionado.clienteId : nuevoPresupuesto.clienteId}
+            onValueChange={handleClienteChange}
+
+            
+          >
+            <SelectTrigger className="">
+              <SelectValue placeholder="Seleccionar cliente" />
+            </SelectTrigger>
+            <SelectContent>
+              {clientes.map((cliente) => (
+                <SelectItem key={cliente.id} value={cliente.id}>
+                  {cliente.nombre}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-        <Button onClick={abrirDialogoNuevoPresupuesto}>
-          <PlusCircle className="mr-2 h-4 w-4" /> Nuevo Presupuesto
-        </Button>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="fecha">Fecha</Label>
+            <div className="flex items-center border rounded-md pl-3 bg-muted text-muted-foreground">
+              <Calendar className="h-4 w-4 mr-2" />
+              {formatDate(new Date())}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="validez">Válido hasta</Label>
+            <Input
+              id="validez"
+              type="date"
+              value={
+                presupuestoSeleccionado
+                  ? new Date(presupuestoSeleccionado.fechaValidez).toISOString().split("T")[0]
+                  : new Date(nuevoPresupuesto.fechaValidez!).toISOString().split("T")[0]
+              }
+              onChange={handleFechaValidezChange}
+            />
+          </div>
+        </div>
       </div>
 
-      <div>
-        <div className="flex items-center py-4">
-          <Input
-            placeholder="Buscar presupuestos..."
-            value={searchTerm}
-            onChange={handleSearch}
-            className="max-w-sm"
-          />
+      {/* Ítems */}
+      <div className="space-y-2 mt-3">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 ">
+          <Label>Ítems del Presupuesto</Label>
+          <Button variant="outline" size="sm" onClick={abrirDialogoNuevoItem}>
+            <PlusCircle className="mr-2 h-4 w-4" /> Agregar Ítem
+          </Button>
         </div>
-        <div className="rounded-md border">
-          <Table>
+
+        <div className="border rounded-md overflow-x-auto">
+          <Table className="min-w-[600px]">
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Cliente</TableHead>
-                <TableHead>Fecha</TableHead>
-                <TableHead>Válido hasta</TableHead>
-                <TableHead>Total</TableHead>
-                <TableHead>Estado</TableHead>
+                <TableHead>Producto</TableHead>
+                <TableHead className="text-right">Cantidad</TableHead>
+                <TableHead className="text-right">Precio</TableHead>
+                <TableHead className="text-right">Descuento</TableHead>
+                <TableHead className="text-right">Subtotal</TableHead>
                 <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {presupuestosFiltrados.length === 0 ? (
+              {((presupuestoSeleccionado ? presupuestoSeleccionado.items : nuevoPresupuesto.items) || []).length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="h-24 text-center">
-                    <div className="flex flex-col items-center justify-center text-muted-foreground">
-                      <AlertCircle className="h-8 w-8 mb-2" />
-                      <p>No hay presupuestos para mostrar</p>
-                      <p className="text-sm">Crea nuevos presupuestos usando el botón "Nuevo Presupuesto"</p>
-                    </div>
+                  <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
+                    No hay ítems en este presupuesto. Haga clic en "Agregar Ítem".
                   </TableCell>
                 </TableRow>
               ) : (
-                presupuestosFiltrados.map((presupuesto) => (
-                  <TableRow key={presupuesto.id} className="cursor-pointer hover:bg-muted/50" onClick={() => abrirVistaPresupuesto(presupuesto)}>
-                    <TableCell className="font-medium">{presupuesto.id.substring(0, 8)}...</TableCell>
-                    <TableCell>{getNombreCliente(presupuesto.clienteId)}</TableCell>
-                    <TableCell>{formatDate(presupuesto.fecha)}</TableCell>
-                    <TableCell>{formatDate(presupuesto.fechaValidez)}</TableCell>
-                    <TableCell>{formatCurrency(presupuesto.total)}</TableCell>
-                    <TableCell>{getBadgeForEstado(presupuesto.estado)}</TableCell>
+                (presupuestoSeleccionado ? presupuestoSeleccionado.items : nuevoPresupuesto.items || []).map((item, index) => (
+                  <TableRow key={item.id}>
+                    <TableCell>{getNombreProducto(item.productoId)}</TableCell>
+                    <TableCell className="text-right">{item.cantidad}</TableCell>
+                    <TableCell className="text-right">{formatCurrency(item.precioUnitario)}</TableCell>
+                    <TableCell className="text-right">{formatCurrency(item.descuento)}</TableCell>
+                    <TableCell className="text-right">{formatCurrency(item.subtotal)}</TableCell>
                     <TableCell className="text-right">
-                      <div className="flex justify-end gap-2" onClick={(e) => e.stopPropagation()}>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            abrirDialogoEditarPresupuesto(presupuesto);
-                          }}
-                        >
+                      <div className="flex justify-end gap-2">
+                        <Button variant="outline" size="icon" onClick={() => editarItem(index)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
                         <Button
                           variant="outline"
                           size="icon"
                           className="text-destructive"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            confirmarBorrarPresupuesto(presupuesto.id);
-                          }}
+                          onClick={() => eliminarItem(index)}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -526,193 +679,79 @@ export default function PresupuestosCliente() {
         </div>
       </div>
 
-      {/* Diálogo para crear/editar presupuesto */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-4xl">
-          <DialogHeader>
-            <DialogTitle>{presupuestoSeleccionado ? "Editar Presupuesto" : "Nuevo Presupuesto"}</DialogTitle>
-            <DialogDescription>
-              {presupuestoSeleccionado 
-                ? "Modifica los detalles del presupuesto y sus ítems." 
-                : "Crea un nuevo presupuesto seleccionando un cliente y agregando ítems."
-              }
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="cliente">Cliente</Label>
-                <Select 
-                  value={presupuestoSeleccionado ? presupuestoSeleccionado.clienteId : nuevoPresupuesto.clienteId} 
-                  onValueChange={handleClienteChange}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Seleccionar cliente" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {clientes.map(cliente => (
-                      <SelectItem key={cliente.id} value={cliente.id}>
-                        {cliente.nombre}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="fecha">Fecha</Label>
-                  <div className="flex items-center border rounded-md pl-3 bg-muted text-muted-foreground">
-                    <Calendar className="h-4 w-4 mr-2" />
-                    {formatDate(new Date())}
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="validez">Válido hasta</Label>
-                  <Input
-                    id="validez"
-                    type="date"
-                    value={presupuestoSeleccionado 
-                      ? new Date(presupuestoSeleccionado.fechaValidez).toISOString().split('T')[0]
-                      : new Date(nuevoPresupuesto.fechaValidez!).toISOString().split('T')[0]
-                    }
-                    onChange={handleFechaValidezChange}
-                  />
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <Label>Ítems del Presupuesto</Label>
-                <Button variant="outline" size="sm" onClick={abrirDialogoNuevoItem}>
-                  <PlusCircle className="mr-2 h-4 w-4" /> Agregar Ítem
-                </Button>
-              </div>
-              
-              <div className="border rounded-md">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Producto</TableHead>
-                      <TableHead className="text-right">Cantidad</TableHead>
-                      <TableHead className="text-right">Precio</TableHead>
-                      <TableHead className="text-right">Descuento</TableHead>
-                      <TableHead className="text-right">Subtotal</TableHead>
-                      <TableHead className="text-right">Acciones</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {((presupuestoSeleccionado ? presupuestoSeleccionado.items : nuevoPresupuesto.items) || []).length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
-                          No hay ítems en este presupuesto. Haga clic en "Agregar Ítem".
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      (presupuestoSeleccionado ? presupuestoSeleccionado.items : nuevoPresupuesto.items || []).map((item, index) => (
-                        <TableRow key={item.id}>
-                          <TableCell>{getNombreProducto(item.productoId)}</TableCell>
-                          <TableCell className="text-right">{item.cantidad}</TableCell>
-                          <TableCell className="text-right">{formatCurrency(item.precioUnitario)}</TableCell>
-                          <TableCell className="text-right">{formatCurrency(item.descuento)}</TableCell>
-                          <TableCell className="text-right">{formatCurrency(item.subtotal)}</TableCell>
-                          <TableCell className="text-right">
-                            <div className="flex justify-end gap-2">
-                              <Button
-                                variant="outline"
-                                size="icon"
-                                onClick={() => editarItem(index)}
-                              >
-                                <Pencil className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="outline"
-                                size="icon"
-                                className="text-destructive"
-                                onClick={() => eliminarItem(index)}
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    )}
-                  </TableBody>
-                </Table>
-              </div>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="estado">Estado</Label>
-                <Select 
-                  value={presupuestoSeleccionado ? presupuestoSeleccionado.estado : nuevoPresupuesto.estado} 
-                  onValueChange={(value) => handleEstadoChange(value as 'borrador' | 'enviado' | 'aceptado' | 'rechazado')}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Seleccionar estado" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="borrador">Borrador</SelectItem>
-                    <SelectItem value="enviado">Enviado</SelectItem>
-                    <SelectItem value="aceptado">Aceptado</SelectItem>
-                    <SelectItem value="rechazado">Rechazado</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <span>Subtotal:</span>
-                  <span className="font-medium">
-                    {formatCurrency(
-                      presupuestoSeleccionado ? presupuestoSeleccionado.subtotal : nuevoPresupuesto.subtotal || 0
-                    )}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Impuestos (21%):</span>
-                  <span className="font-medium">
-                    {formatCurrency(
-                      presupuestoSeleccionado ? presupuestoSeleccionado.impuestos : nuevoPresupuesto.impuestos || 0
-                    )}
-                  </span>
-                </div>
-                <Separator />
-                <div className="flex justify-between">
-                  <span className="font-bold">Total:</span>
-                  <span className="font-bold">
-                    {formatCurrency(
-                      presupuestoSeleccionado ? presupuestoSeleccionado.total : nuevoPresupuesto.total || 0
-                    )}
-                  </span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="notas">Notas</Label>
-              <Textarea
-                id="notas"
-                placeholder="Notas adicionales para el presupuesto"
-                value={presupuestoSeleccionado ? presupuestoSeleccionado.notas || "" : nuevoPresupuesto.notas || ""}
-                onChange={handleNotasChange}
-              />
-            </div>
+      {/* Estado y totales */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="estado">Estado</Label>
+          <Select
+            value={presupuestoSeleccionado ? presupuestoSeleccionado.estado : nuevoPresupuesto.estado}
+            onValueChange={(value) => handleEstadoChange(value as "borrador" | "enviado" | "aceptado" | "rechazado")}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Seleccionar estado" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="borrador">Borrador</SelectItem>
+              <SelectItem value="enviado">Enviado</SelectItem>
+              <SelectItem value="aceptado">Aceptado</SelectItem>
+              <SelectItem value="rechazado">Rechazado</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex justify-between">
+            <span>Subtotal:</span>
+            <span className="font-medium">
+              {formatCurrency(presupuestoSeleccionado ? presupuestoSeleccionado.subtotal : nuevoPresupuesto.subtotal || 0)}
+            </span>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-              Cancelar
-            </Button>
-            <Button onClick={guardarPresupuesto}>
-              {presupuestoSeleccionado ? "Guardar Cambios" : "Crear Presupuesto"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          <div className="flex justify-between">
+            <span>Impuestos (21%):</span>
+            <span className="font-medium">
+              {formatCurrency(presupuestoSeleccionado ? presupuestoSeleccionado.impuestos : nuevoPresupuesto.impuestos || 0)}
+            </span>
+          </div>
+          <Separator />
+          <div className="flex justify-between">
+            <span className="font-bold">Total:</span>
+            <span className="font-bold">
+              {formatCurrency(presupuestoSeleccionado ? presupuestoSeleccionado.total : nuevoPresupuesto.total || 0)}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Notas */}
+      <div className="space-y-2">
+        <Label htmlFor="notas">Notas</Label>
+        <Textarea
+          id="notas"
+          placeholder="Notas adicionales para el presupuesto"
+          value={presupuestoSeleccionado ? presupuestoSeleccionado.notas || "" : nuevoPresupuesto.notas || ""}
+          onChange={handleNotasChange}
+        />
+      </div>
+    </div>
+
+{/* Botones siempre visibles */}
+<DialogFooter className="mt-4 flex flex-col sm:flex-row gap-2 sm:gap-4">
+      <Button
+        variant="outline"
+        onClick={() => setIsDialogOpen(false)}
+        className="w-full sm:w-auto"
+      >
+        Cancelar
+      </Button>
+      <Button
+        onClick={guardarPresupuesto}
+        className="w-full sm:w-auto"
+      >
+        {presupuestoSeleccionado ? "Guardar Cambios" : "Crear Presupuesto"}
+      </Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
 
       {/* Diálogo para agregar/editar ítem del presupuesto */}
       <Dialog open={isItemDialogOpen} onOpenChange={setIsItemDialogOpen}>
@@ -927,6 +966,7 @@ export default function PresupuestosCliente() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      </div>
     </div>
   );
 }

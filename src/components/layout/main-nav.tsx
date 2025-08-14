@@ -76,7 +76,7 @@ export function MainNav() {
     <NavigationMenu >
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Home</NavigationMenuTrigger>
+          <NavigationMenuTrigger>Administrador</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid p-3 gap-2 md:w-[400px] lg:w-[400px] lg:h-[400px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-6">
