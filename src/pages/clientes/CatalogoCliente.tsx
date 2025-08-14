@@ -246,8 +246,8 @@ export default function CatalogoCliente() {
 <>
 <>
   {/* Banner Presupuesto */}
-  <section className=" text-white py-12 px-6 flex justify-center items-center lg:py-16 lg:h-[560px] image-bg banner-content ">
-    <div className="relative max-w-6xl w-full -mt-10">
+  <section className=" text-white py-12 px-6 flex justify-center items-center lg:py-16 lg:h-[560px] image-bg banner-content -mt-5 ">
+    <div className="relative max-w-6xl w-full -mt-11">
       <h2 className="text-6xl font-bold mb-10 text-center text-black">
         ¿Cómo trabajamos contigo?
       </h2>

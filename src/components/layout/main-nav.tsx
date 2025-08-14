@@ -39,7 +39,7 @@ export function MainNav() {
 
   const proveedoresUrl: { title: string; href: string; description: string }[] = [
     {
-      title: "Presupuestos",
+      title: "Proveedores home",
       href: "proveedores/presupuestos",
       description:
         "A modal dialog that interrupts the user with important content and expects a response.",
