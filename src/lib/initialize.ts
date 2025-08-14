@@ -102,32 +102,35 @@ export const initializeMockData = () => {
       {
         id: 'prod1',
         nombre: 'Arena1',
-        descripcion: 'Laptop de alto rendimiento para profesionales',
+        descripcion: 'Arena de mar',
         precio: 1299.99,
         costo: 899.99,
         stock: 25,
         proveedorId: 'p1',
-        categoria: 'Electrónica'
+        categoria: 'Arena',
+        image: "/img/galeriaproductos/arena.webp"
       },
       {
         id: 'prod2',
         nombre: 'Arena2',
-        descripcion: 'Monitor curvo de alta resolución',
+        descripcion: 'Arena de rio',
         precio: 499.99,
         costo: 320.50,
         stock: 15,
         proveedorId: 'p1',
-        categoria: 'Periféricos'
+        categoria: 'Arena',
+        image: "/img/galeriaproductos/arena1.webp"
       },
       {
         id: 'prod3',
         nombre: 'Arena3',
-        descripcion: 'Teclado gaming con switches Cherry MX',
+        descripcion: 'Arena colorada',
         precio: 129.99,
         costo: 75.25,
         stock: 50,
         proveedorId: 'p2',
-        categoria: 'Periféricos'
+        categoria: 'Arena',
+        image: "/img/galeriaproductos/arena1.webp"
       },
       {
         id: 'prod4',
@@ -137,7 +140,8 @@ export const initializeMockData = () => {
         costo: 210.75,
         stock: 10,
         proveedorId: 'p3',
-        categoria: 'Mobiliario'
+        categoria: 'Cemento',
+         image: "/img/galeriaproductos/cemento1.jpg"
       },
       {
         id: 'prod5',
@@ -147,7 +151,8 @@ export const initializeMockData = () => {
         costo: 95.50,
         stock: 30,
         proveedorId: 'p2',
-        categoria: 'Componentes'
+        categoria: 'Cemento',
+          image: "/img/galeriaproductos/cemento2.jfif"
       },
       {
         id: 'prod6',
@@ -157,27 +162,30 @@ export const initializeMockData = () => {
         costo: 550.00,
         stock: 8,
         proveedorId: 'p4',
-        categoria: 'Componentes'
+        categoria: 'Cemento',
+          image: "/img/galeriaproductos/cemento3.webp"
       },
       {
         id: 'prod7',
-        nombre: 'Inodoro1',
+        nombre: 'Ladrillo1',
         descripcion: 'Auriculares inalámbricos con cancelación de ruido',
         precio: 179.99,
         costo: 95.00,
         stock: 40,
         proveedorId: 'p2',
-        categoria: 'Audio'
+        categoria: 'Ladrillo',
+        image: "/img/galeriaproductos/ladrillos.webp"
       },
       {
         id: 'prod8',
-        nombre: 'Inodoro2',
+        nombre: 'Ladrillo2',
         descripcion: 'Escritorio con altura ajustable eléctrica',
         precio: 449.99,
         costo: 270.00,
         stock: 12,
         proveedorId: 'p3',
-        categoria: 'Mobiliario'
+        categoria: 'Ladrillo',
+        image: "/img/galeriaproductos/ladrillos-block.webp"
       },
       {
         id: 'prod9',
@@ -187,7 +195,8 @@ export const initializeMockData = () => {
         costo: 160.00,
         stock: 35,
         proveedorId: 'p4',
-        categoria: 'Componentes'
+        categoria: 'Ladrillo',
+        image: "/img/galeriaproductos/piedra.webp"
       },
       {
         id: 'prod10',
@@ -197,7 +206,8 @@ export const initializeMockData = () => {
         costo: 75.00,
         stock: 20,
         proveedorId: 'p4',
-        categoria: 'Periféricos'
+         categoria: 'Pack',
+        image: "/img/galeriaproductos/materiales-pack.webp"
       }
     ],
     

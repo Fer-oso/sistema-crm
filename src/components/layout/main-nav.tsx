@@ -16,7 +16,7 @@ export function MainNav() {
   ];
 
 
-  const components: { title: string; href: string; description: string }[] = [
+  const clientsUrl: { title: string; href: string; description: string }[] = [
     {
       title: "Home clientes",
       href: "cliente/home",
@@ -35,6 +35,21 @@ export function MainNav() {
       description:
         "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
     },
+  ]
+
+  const proveedoresUrl: { title: string; href: string; description: string }[] = [
+    {
+      title: "Presupuestos",
+      href: "proveedores/presupuestos",
+      description:
+        "A modal dialog that interrupts the user with important content and expects a response.",
+    },
+    {
+      title: "Productos",
+      href: "proveedores/productos",
+      description:
+        "For sighted users to preview content available behind a link.",
+    }
   ]
 
   function ListItem({
@@ -116,7 +131,7 @@ export function MainNav() {
           <NavigationMenuTrigger>Clientes</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] p-5 gap-2 md:w-[500px] md:grid-cols-2 lg:w-[400px] lg:h-[200px]">
-              {components.map((component) => (
+              {clientsUrl.map((component) => (
                 <ListItem
                   key={component.title}
                   title={component.title}
@@ -128,46 +143,29 @@ export function MainNav() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+      
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Proveedores</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] p-5 gap-2 md:w-[500px] md:grid-cols-2 lg:w-[400px] lg:h-[200px]">
+              {proveedoresUrl.map((component) => (
+                <ListItem
+                  key={component.title}
+                  title={component.title}
+                  href={component.href}
+                >
+                  {component.description}
+                </ListItem>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <Link to="/docs">Docs</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Proveedores</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid m-auto p-4 w-[350px] gap-4">
-              <li>
-                <NavigationMenuLink asChild>
-                  <Link to="presupuestos">
-                    <div className="font-medium">Presupuestos</div>
-                    <div className="text-muted-foreground">
-                      Browse all components in the library.
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <Link to="productos">
-                    <div className="font-medium">Productos</div>
-                    <div className="text-muted-foreground">
-                      Learn how to use the library.
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <Link to="#">
-                    <div className="font-medium">Blog</div>
-                    <div className="text-muted-foreground">
-                      Read our latest blog posts.
-                    </div>
-                  </Link>
-                </NavigationMenuLink>
-              </li>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      
-        
       </NavigationMenuList>
     </NavigationMenu>
      {/* {navItems.map((item) => (

@@ -247,7 +247,7 @@ export default function CatalogoCliente() {
 <>
   {/* Banner Presupuesto */}
   <section className=" text-white py-12 px-6 flex justify-center items-center lg:py-16 lg:h-[560px] image-bg banner-content ">
-    <div className="relative max-w-6xl w-full">
+    <div className="relative max-w-6xl w-full -mt-10">
       <h2 className="text-6xl font-bold mb-10 text-center text-black">
         ¿Cómo trabajamos contigo?
       </h2>
@@ -530,6 +530,18 @@ export default function CatalogoCliente() {
                         }`}
                         onClick={() => toggleProductSelection(producto)}
                       >
+
+ {/* Imagen del producto */}
+ {producto.image && (
+    <div className="w-full h-40 overflow-hidden">
+      <img
+        src={producto.image}
+        alt={producto.nombre}
+        className="w-full h-full object-cover"
+      />
+    </div>
+  )}
+
                         <CardHeader className="p-4 pb-2">
                           <div className="flex justify-between">
                             <CardTitle className="text-lg truncate max-w-[80%]">{producto.nombre}</CardTitle>

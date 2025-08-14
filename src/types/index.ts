@@ -19,6 +19,7 @@ export interface Producto {
   stock: number;
   proveedorId?: string;
   categoria: string;
+  image: string;
 }
 
 export interface Proveedor {

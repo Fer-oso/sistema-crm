@@ -17,6 +17,8 @@ import NotFound from './pages/NotFound';
 import CatalogoCliente from './pages/clientes/CatalogoCliente';
 import PresupuestosCliente from './pages/clientes/PresupuestosCliente';
 import ComparadorCliente from './pages/clientes/ComparadorCliente';
+import PresupuestosProveedores from './pages/proveedores/PresupuestosProveedores';
+import ProductosProveedores from './pages/proveedores/ProductosProveedores';
 
 const queryClient = new QueryClient();
 
@@ -40,6 +42,10 @@ const App = () => (
               <Route path="/cliente/home" element={<CatalogoCliente/>} />
               <Route path="/cliente/presupuestos" element={<PresupuestosCliente/>} />
               <Route path="/cliente/comparador" element={<ComparadorCliente/>} />
+
+              {/* rutas vista proveedor */}
+              <Route path="/proveedores/presupuestos" element={<PresupuestosProveedores/>} />
+              <Route path="/proveedores/productos" element={<ProductosProveedores/>} />
             
             </Route>
             <Route path="*" element={<NotFound />} />
