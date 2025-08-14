@@ -38,10 +38,6 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -347,10 +343,10 @@ export default function PresupuestosClientes() {
     if (presupuestoSeleccionado) {
       presupuestosStore.update(presupuestoSeleccionado.id, presupuestoSeleccionado);
     } else {
-      if (nuevoPresupuesto.clienteId) {
+      if (nuevoPresupuesto.clienteId || nuevoPresupuesto.items) {
         presupuestosStore.create(nuevoPresupuesto as Omit<Presupuesto, "id">);
         setNuevoPresupuesto({
-          clienteId: "",
+          clienteId: "general",
           fecha: new Date(),
           fechaValidez: new Date(new Date().setDate(new Date().getDate() + 30)),
           items: [],
@@ -412,7 +408,7 @@ export default function PresupuestosClientes() {
 
   const getNombreCliente = (clienteId: string) => {
     const cliente = clientes.find(c => c.id === clienteId);
-    return cliente ? cliente.nombre : "Cliente no encontrado";
+    return cliente ? cliente.nombre : "Presupuesto general";
   };
 
   const getNombreProducto = (productoId: string) => {
@@ -488,7 +484,7 @@ export default function PresupuestosClientes() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-32">ID</TableHead>
-          <TableHead>Cliente</TableHead>
+          <TableHead>Proveedor</TableHead>
           <TableHead>Fecha</TableHead>
           <TableHead>Válido hasta</TableHead>
           <TableHead>Total</TableHead>
@@ -575,7 +571,7 @@ export default function PresupuestosClientes() {
          {/* Datos principales */}
          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2 ">
-          <Label htmlFor="cliente">Cliente</Label>
+          <Label htmlFor="cliente">Proveedor</Label>
           <Select
             value={presupuestoSeleccionado ? presupuestoSeleccionado.clienteId : nuevoPresupuesto.clienteId}
             onValueChange={handleClienteChange}
@@ -583,7 +579,7 @@ export default function PresupuestosClientes() {
             
           >
             <SelectTrigger className="">
-              <SelectValue placeholder="Seleccionar cliente" />
+              <SelectValue placeholder="Seleccionar proveedor" />
             </SelectTrigger>
             <SelectContent>
               {clientes.map((cliente) => (

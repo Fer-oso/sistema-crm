@@ -15,6 +15,15 @@ export const initializeMockData = () => {
   const mockData = {
     clientes: [
       {
+        id: 'general',
+        nombre: 'Presupuesto general',
+        email: 'contacto@empresaabc.com',
+        telefono: '123-456-7890',
+        direccion: 'Av. Principal 123, Ciudad',
+        notas: 'Cliente prioritario',
+        fechaRegistro: new Date(currentYear, currentMonth-5, 15)
+      },
+      {
         id: 'c1',
         nombre: 'Empresa ABC S.A.',
         email: 'contacto@empresaabc.com',
